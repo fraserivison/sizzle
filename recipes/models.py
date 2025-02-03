@@ -4,7 +4,6 @@ from cloudinary.models import CloudinaryField
 from django.utils.text import slugify
 
 
-# Create your models here.
 class Recipe(models.Model):
     title = models.CharField(max_length=40)
     slug = models.SlugField(max_length=35, unique=True)
@@ -19,7 +18,6 @@ class Recipe(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     average_rating = models.FloatField(default=0)
 
-    # Meta class to define ordering of records
     class Meta:
         ordering = ['-created_on']
 

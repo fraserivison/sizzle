@@ -16,23 +16,18 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 
-# Load environment variables from the .env file
 load_dotenv()
 
-# Get environment variables
 CLOUDINARY_URL = os.getenv('CLOUDINARY_URL')
 SECRET_KEY = os.getenv('SECRET_KEY')
 DATABASE_URL = os.getenv('DATABASE_URL')
 
-# Cloudinary configuration
 cloudinary.config(
     cloudinary_url=CLOUDINARY_URL
 )
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: don't run with debug turned on in production!
 
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
@@ -50,7 +45,6 @@ CSRF_TRUSTED_ORIGINS = [
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',

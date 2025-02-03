@@ -3,7 +3,6 @@ from .models import Recipe
 from django_summernote.admin import SummernoteModelAdmin
 
 
-# Register your models here.
 class RecipeAdmin(SummernoteModelAdmin):
     list_display = ('title', 'slug')
     search_fields = ['title']

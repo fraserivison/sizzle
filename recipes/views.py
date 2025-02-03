@@ -4,18 +4,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from allauth.account.views import LoginView as AllauthLoginView, \
     SignupView as AllauthSignupView, LogoutView as AllauthLogoutView
-from .models import Recipe  # Rating (comment out for now)
+from .models import Recipe
 from .forms import RecipeForm, RatingForm
 from django.utils.text import slugify
 import uuid
 
 
-# Home page view (no recipes displayed here)
 def index(request):
     return render(request, 'index.html')
 
 
-# Recipes list view (renders the recipes.html template)
 def recipe_list(request):
     search_query = request.GET.get('search', '')
 
@@ -35,7 +33,6 @@ def recipe_list(request):
     )
 
 
-# Recipe detail view
 def recipe_detail(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)
 
@@ -48,7 +45,6 @@ def recipe_detail(request, slug):
             rating_form = RatingForm(request.POST)
             if rating_form.is_valid():
                 if existing_rating:
-                    # Update the existing rating
                     existing_rating.score = rating_form.cleaned_data['score']
                     existing_rating.save()
                     messages.success(
@@ -56,7 +52,6 @@ def recipe_detail(request, slug):
                         'Your rating has been updated!'
                     )
                 else:
-                    # Save the new rating
                     rating = rating_form.save(commit=False)
                     rating.recipe = recipe
                     rating.user = request.user
@@ -66,7 +61,6 @@ def recipe_detail(request, slug):
                         'Your rating has been submitted!'
                     )
 
-                # Update the average rating for the recipe
                 recipe.update_average_rating()
                 return redirect('recipe_detail', slug=slug)
             else:
@@ -87,7 +81,6 @@ def recipe_detail(request, slug):
     })
 
 
-# Create a recipe
 @login_required
 def create_recipe(request):
     if request.method == 'POST':
@@ -107,12 +100,10 @@ def create_recipe(request):
     return render(request, 'recipes/create_recipe.html', {'form': form})
 
 
-# Recipe edit view
 @login_required
 def edit_recipe(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)
 
-    # Check if the user is the author or an admin
     if recipe.author != request.user and not request.user.is_staff:
         messages.error(
             request,
@@ -138,12 +129,10 @@ def edit_recipe(request, slug):
     })
 
 
-# Recipe delete view
 @login_required
 def delete_recipe(request, slug):
     recipe = get_object_or_404(Recipe, slug=slug)
 
-    # Check if the user is the author or an admin
     if recipe.author != request.user and not request.user.is_staff:
         messages.error(
             request,
@@ -162,7 +151,6 @@ def delete_recipe(request, slug):
     })
 
 
-# Custom login view using allauth
 class LoginView(AllauthLoginView):
     template_name = 'account/login.html'
 
@@ -175,7 +163,6 @@ class LoginView(AllauthLoginView):
         return self.request.META.get('HTTP_REFERER', super().get_success_url())
 
 
-# Custom signup view using allauth
 class SignupView(AllauthSignupView):
     template_name = 'account/signup.html'
 
@@ -188,7 +175,6 @@ class SignupView(AllauthSignupView):
         return self.request.META.get('HTTP_REFERER', super().get_success_url())
 
 
-# Custom logout view using allauth
 class LogoutView(AllauthLogoutView):
     template_name = 'account/logout.html'
 
@@ -200,6 +186,5 @@ class LogoutView(AllauthLogoutView):
         return self.request.META.get('HTTP_REFERER', super().get_success_url())
 
 
-# Custom 404 view
 def custom_404_view(request, exception):
     return render(request, '404.html', status=404)
