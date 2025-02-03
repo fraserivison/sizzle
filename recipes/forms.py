@@ -1,9 +1,13 @@
 from django import forms
 from .models import Recipe, Rating
 
+
 class RecipeForm(forms.ModelForm):
     title = forms.CharField(
-        widget=forms.TextInput(attrs={'placeholder': 'Enter the name here...', 'class': 'form-control'})
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Enter the name here...',
+            'class': 'form-control'
+        })
     )
     description = forms.CharField(
         required=True,
@@ -17,22 +21,34 @@ class RecipeForm(forms.ModelForm):
     )
     ingredients = forms.CharField(
         required=True,
-        widget=forms.Textarea(attrs={'placeholder': 'List ingredients (one per line)', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={
+            'placeholder': 'List ingredients (one per line)',
+            'class': 'form-control'
+        })
     )
 
     instructions = forms.CharField(
         required=True,
-        widget=forms.Textarea(attrs={'placeholder': 'Enter step-by-step instructions (one step per line)', 'class': 'form-control'})
+        widget=forms.Textarea(attrs={
+            'placeholder': 'Enter step-by-step instructions (one per line)',
+            'class': 'form-control'
+        })
     )
 
     cooking_time = forms.IntegerField(
         required=True,
-        widget=forms.NumberInput(attrs={'placeholder': 'Enter a number', 'class': 'form-control'})
+        widget=forms.NumberInput(attrs={
+            'placeholder': 'Enter a number',
+            'class': 'form-control'
+        })
     )
 
     servings = forms.IntegerField(
         required=True,
-        widget=forms.NumberInput(attrs={'placeholder': 'Enter a number', 'class': 'form-control'})
+        widget=forms.NumberInput(attrs={
+            'placeholder': 'Enter a number',
+            'class': 'form-control'
+        })
     )
 
     featured_image = forms.ImageField(
@@ -65,6 +81,7 @@ class RecipeForm(forms.ModelForm):
             raise forms.ValidationError('Servings cannot be negative.')
         return servings
 
+
 class RatingForm(forms.ModelForm):
     class Meta:
         model = Rating
@@ -72,13 +89,13 @@ class RatingForm(forms.ModelForm):
         widgets = {
             'score': forms.Select(
                 choices=[
-                ('', 'Select a rating'),
-                (1, '1 Star'),
-                (2, '2 Stars'),
-                (3, '3 Stars'),
-                (4, '4 Stars'),
-                (5, '5 Stars'),
-            ],
+                    ('', 'Select a rating'),
+                    (1, '1 Star'),
+                    (2, '2 Stars'),
+                    (3, '3 Stars'),
+                    (4, '4 Stars'),
+                    (5, '5 Stars'),
+                ],
                 attrs={'class': 'form-control'},
             ),
         }
