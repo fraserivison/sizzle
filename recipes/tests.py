@@ -1,44 +1,28 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
-from django.core.files.uploadedfile import SimpleUploadedFile
 from .models import Recipe
 from .forms import RecipeForm
-from unittest.mock import patch 
+from unittest.mock import patch
+
 
 class RecipeFormTests(TestCase):
-    def test_valid_recipe_form(self):
-        form_data = {
-            'title': 'Test Recipe',
-            'description': 'Delicious and easy.',
-            'ingredients': 'Test ingredients',
-            'instructions': 'Test instructions',
-            'cooking_time': 30,  # Valid cooking time
-            'servings': 4,
-            'featured_image': 'assets/images/erd.png',
-        }
-        form = RecipeForm(data=form_data)
-
     def test_invalid_recipe_form(self):
-    # Create an instance of the RecipeForm with invalid data
         form_data = {
-            'title': 'This title is way too long and exceeds the maximum length',  # Invalid title (too long)
-            'featured_image': '',  # Missing featured image (required)
-            'ingredients': '',  # Missing ingredients (required)
-            'instructions': '',  # Missing instructions (required)
-            'cooking_time': '',  # Optionally include this to test as well
+            'title': 'This title is too long and exceeds the maximum length',
+            'featured_image': '',
+            'ingredients': '',
+            'instructions': '',
+            'cooking_time': '',
         }
         form = RecipeForm(data=form_data)
-    
-        # Check if the form is not valid
         self.assertFalse(form.is_valid(), msg=form.errors)
 
-        # Check for specific errors in the form
         self.assertIn('title', form.errors)
         self.assertIn('featured_image', form.errors)
         self.assertIn('ingredients', form.errors)
         self.assertIn('instructions', form.errors)
-        self.assertIn('cooking_time', form.errors)  # Optional, depending on your requirements
+        self.assertIn('cooking_time', form.errors)
 
 
 class SlugGenerationTests(TestCase):
@@ -57,12 +41,15 @@ class SlugGenerationTests(TestCase):
             servings=2,
         )
         self.assertEqual(recipe.slug, 'test-recipe')
-        self.assertEqual(recipe.featured_image, 'http://example.com/fake-image.jpg')
+        self.assertEqual(recipe.featured_image,
+                         'http://example.com/fake-image.jpg')
+
 
 class RecipeViewTests(TestCase):
     @patch('cloudinary.CloudinaryResource.url', return_value='mocked_url')
     def setUp(self, mock_url):
-        self.user = User.objects.create_user(username='testuser', password='password')
+        self.user = User.objects.create_user(username='testuser',
+                                             password='password')
         self.client.login(username='testuser', password='password')
 
     @patch('cloudinary.CloudinaryResource.url', return_value='mocked_url')
@@ -74,8 +61,8 @@ class RecipeViewTests(TestCase):
     def test_create_recipe_view_redirects_when_not_logged_in(self, mock_url):
         self.client.logout()
         response = self.client.get(reverse('create_recipe'))
-        self.assertEqual(response.status_code, 302)    
-    
+        self.assertEqual(response.status_code, 302)
+
     @patch('cloudinary.CloudinaryResource.url', return_value='mocked_url')
     def test_recipe_list_view_pagination(self, mock_url):
         for i in range(15):
@@ -99,9 +86,11 @@ class RecipeViewTests(TestCase):
             cooking_time=20,
             servings=2,
         )
-        response = self.client.get(reverse('recipe_detail', kwargs={'slug': recipe.slug}))
+        response = self.client.get(reverse('recipe_detail',
+                                           kwargs={'slug': recipe.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'Recipe Detail Test')
+
 
 class AuthTests(TestCase):
     def test_signup_view(self):
@@ -126,11 +115,11 @@ class AuthTests(TestCase):
         response = self.client.get(reverse('create_recipe'))
         self.assertEqual(response.status_code, 302)
 
-# Error Handling for Forms
+
 class RecipeFormErrorTests(TestCase):
     def test_form_missing_required_fields(self):
         form_data = {
-            'title': '',  # Missing title
+            'title': '',
             'featured_image': None,
             'description': 'Test Description',
             'ingredients': 'Test Ingredients',
@@ -144,7 +133,7 @@ class RecipeFormErrorTests(TestCase):
         self.assertIn('featured_image', form.errors)
         self.assertIn('instructions', form.errors)
 
-# Edge Cases for Views
+
 class RecipeEdgeCaseTests(TestCase):
     def test_form_missing_required_fields(self):
         form_data = {
@@ -161,29 +150,22 @@ class RecipeEdgeCaseTests(TestCase):
 
         self.assertIn('title', form.errors)
         self.assertIn('instructions', form.errors)
-        
         if 'featured_image' in form.errors:
             self.assertIn('featured_image', form.errors)
 
 
-# Edge Cases for Views
-class RecipeEdgeCaseTests(TestCase):
-    def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='password')
-        self.client.login(username='testuser', password='password')
-
-# Testing Recipe Editing
 class RecipeEditTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(username='testuser', password='password')
+        self.user = User.objects.create_user(username='testuser',
+                                             password='password')
         self.client.login(username='testuser', password='password')
-    
+
     @patch('cloudinary.CloudinaryResource.url', return_value='mocked_url')
     def test_edit_recipe_view(self, mock_url):
         recipe = Recipe.objects.create(
             title='Recipe to Edit',
             author=self.user,
-            featured_image='http://example.com/fake-image.jpg',  # Include a fake image for testing
+            featured_image='http://example.com/fake-image.jpg',
             description='Test Description',
             ingredients='Initial ingredients',
             instructions='Initial instructions',
@@ -193,16 +175,17 @@ class RecipeEditTests(TestCase):
 
         edit_data = {
             'title': 'Edited Recipe Title',
-            'featured_image': 'http://example.com/fake-image.jpg',  # Keep it the same for the test
+            'featured_image': 'http://example.com/fake-image.jpg',
             'description': 'Updated Description',
             'ingredients': 'Updated ingredients',
             'instructions': 'Updated instructions',
             'cooking_time': 40,
             'servings': 5,
         }
-        response = self.client.post(reverse('edit_recipe', kwargs={'slug': recipe.slug}), data=edit_data)
+        response = self.client.post(reverse('edit_recipe', kwargs={
+            'slug': recipe.slug}), data=edit_data)
         self.assertEqual(response.status_code, 302)
-        
+
         updated_recipe = Recipe.objects.get(id=recipe.id)
         self.assertEqual(updated_recipe.title, 'Edited Recipe Title')
         self.assertEqual(updated_recipe.description, 'Updated Description')
@@ -216,7 +199,7 @@ class RecipeEditTests(TestCase):
         recipe = Recipe.objects.create(
             title='Recipe to Edit',
             author=self.user,
-            featured_image='http://example.com/fake-image.jpg',  # Include a fake image for testing
+            featured_image='http://example.com/fake-image.jpg',
             description='Test Description',
             ingredients='Initial ingredients',
             instructions='Initial instructions',
@@ -225,7 +208,7 @@ class RecipeEditTests(TestCase):
         )
 
         invalid_data = {
-            'title': '',  # Invalid: title cannot be empty
+            'title': '',
             'description': 'Updated Description',
             'ingredients': 'Updated ingredients',
             'instructions': 'Updated instructions',
@@ -233,13 +216,16 @@ class RecipeEditTests(TestCase):
             'servings': 5,
         }
 
-        response = self.client.post(reverse('edit_recipe', kwargs={'slug': recipe.slug}), data=invalid_data)
+        response = self.client.post(reverse('edit_recipe', kwargs={
+            'slug': recipe.slug}), data=invalid_data)
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'title', 'This field is required.')
+        self.assertFormError(response,
+                             'form', 'title', 'This field is required.')
 
     @patch('cloudinary.CloudinaryResource.url', return_value='mocked_url')
     def test_edit_nonexistent_recipe(self, mock_url):
-        response = self.client.get(reverse('edit_recipe', kwargs={'slug': 'nonexistent-recipe'}))
+        response = self.client.get(reverse('edit_recipe', kwargs={
+            'slug': 'nonexistent-recipe'}))
         self.assertEqual(response.status_code, 404)
 
     @patch('cloudinary.CloudinaryResource.url', return_value='mocked_url')
@@ -254,8 +240,8 @@ class RecipeEditTests(TestCase):
             cooking_time=20,
             servings=2,
         )
-        response = self.client.post(reverse('delete_recipe', kwargs={'slug': recipe.slug}))
+        response = self.client.post(reverse('delete_recipe', kwargs={
+            'slug': recipe.slug}))
         self.assertEqual(response.status_code, 302)
-        self.assertRaises(Recipe.DoesNotExist, Recipe.objects.get, id=recipe.id)
-
-
+        self.assertRaises(Recipe.DoesNotExist, Recipe.objects.get,
+                          id=recipe.id)
