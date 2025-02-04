@@ -178,7 +178,6 @@ The acceptance criteria for each user story include:
 
 These acceptance criteria not only enhance the functionality of **Sizzle** but also contribute to an intuitive and user-friendly experience, ensuring that users can manage their recipes effortlessly and with confidence.
 
-
 ---
 
 ## Features
@@ -187,33 +186,26 @@ These acceptance criteria not only enhance the functionality of **Sizzle** but a
 
 - **Recipe Management**: 
   Users can effortlessly add new recipes, edit existing ones, and delete those they no longer wish to keep. This feature provides an intuitive interface for managing personal recipe collections, ensuring users can keep their culinary creations organised.
-  ![Recipe Management](insert-image-link-here)
 
 - **Search Functionality**: 
   The platform allows users to search for recipes based on keywords, making it easy to find specific dishes or ingredients. This feature enhances user experience by enabling quick access to desired recipes without scrolling through the entire list.
-  ![Search Functionality](insert-image-link-here)
 
 - **Recipe Rating**: 
   The rating system allows users to rate recipes based on their experience. This feature helps others gauge the popularity and quality of recipes, promoting community engagement and interaction.
-  ![Recipe Rating](insert-image-link-here)
 
 - **User Authentication**: 
   The application offers secure registration, login, and logout functionalities. User authentication ensures that each individual's recipe collection remains private and secure, while also providing a personalised experience.
-  ![User Authentication](insert-image-link-here)
 
 ### Features To Be Implemented
 
 - **Filter Recipes by Category**: 
   This upcoming feature will allow users to filter recipes based on categories such as cuisine type, dietary preferences, or meal types. This functionality aims to enhance usability by enabling users to discover recipes that best fit their specific needs and occasions.
-  ![Filter Recipes by Category](insert-image-link-here)
 
 - **User Home Page**: 
   The implementation of a dedicated user home page will offer a personalised space for users to view their favourite recipes, recently added dishes, and suggested recipes based on their cooking history. This feature aims to enhance user engagement and streamline access to frequently used functionalities.
-  ![User Home Page](insert-image-link-here)
 
   - **Favourite Recipes**: 
   Users will be able to mark their favourite recipes for quick and easy access. This feature will be particularly useful for those who often revisit certain dishes and want to streamline their cooking experience.
-  ![Favourite Recipes](insert-image-link-here)
 
 ---
 
@@ -272,7 +264,6 @@ Automated testing is an essential part of the development process in this Recipe
        - Instructions
        - Cooking Time
        - Servings
-       - Category
      - The test ensures that the form is valid and that the cleaned data matches the expected values.
    - **Invalid Recipe Form Test:**
      - This test verifies the form's behaviour with invalid data, checking for:
@@ -280,7 +271,6 @@ Automated testing is an essential part of the development process in this Recipe
        - Description length exceeding the limit.
        - Missing ingredients and instructions.
        - Negative values for cooking time and servings.
-       - Missing category.
      - The test ensures that appropriate error messages are returned for each invalid field.
 
 2. **Slug Generation Tests:**
@@ -294,7 +284,7 @@ Automated testing is an essential part of the development process in this Recipe
      - This test verifies that the recipe creation view is accessible and functions correctly for logged-in users.
      - It ensures that the user is redirected to the login page if they attempt to access the recipe creation page while logged out.
    - **Recipe List View Pagination Test:**
-     - This test checks that the pagination feature of the recipe list view works as intended, ensuring that a set number of recipes (6 in this case) is displayed per page.
+     - This test checks that the pagination feature of the recipe list view works as intended, ensuring that a set number of recipes (9 in this case) is displayed per page.
    - **Recipe Detail View Test:**
      - This test confirms that the recipe detail view retrieves the correct recipe based on its slug and displays its title accurately.
 
@@ -315,11 +305,6 @@ Automated testing is an essential part of the development process in this Recipe
 - **Recipe Editing and Deleting Tests:**
   - These tests confirm that users can successfully edit existing recipes and delete them when required. They also check for the appropriate redirection and error handling in these processes.
 
-#### Changes Made
-
-- **Mocking Cloudinary Uploads:** 
-  - To streamline testing and avoid dependencies on external services, we implemented mocks for Cloudinary's upload functionality. By using a placeholder image URL (`http://example.com/fake-image.jpg`), we could simulate image uploads without requiring actual file uploads during tests. This adjustment ensured that our tests remained fast and reliable.
-
 #### Test Execution Results
 Below is a screenshot of the automated tests executed in the terminal:
 
@@ -327,19 +312,21 @@ Below is a screenshot of the automated tests executed in the terminal:
 
 ### Manual Testing
 
-#### User Model Testing
-Testing of the user model was carried out through the Django Admin Dashboard to ensure that all user-related functionalities are working correctly. This includes:
-
-- **Creating Users:** Users were successfully created through the admin panel, with the necessary fields (username, email, password) validated as expected.
-- **Deleting Users:** Users were deleted, and the system correctly removed the associated data without errors.
-- **Editing Users:** User information was modified through the admin panel, and changes were reflected immediately in the application.
-
 #### Recipe Model Testing
 The recipe model was thoroughly tested through manual operations using the Django Admin Dashboard as well as the front-end user interface. The following functionalities were tested:
 
-- **Adding Recipes:** Recipes were successfully added to the database, with all required fields (title, ingredients, instructions) validated. Upon creation, the recipes were available for viewing on the front end.
+- **Create Recipe Error Handling:** When attempting to create a recipe with missing or invalid fields, appropriate error messages were displayed, ensuring the form validation works correctly. The form correctly highlighted the problematic fields.
+  ![Create Recipe Error](assets/images/create-errors.jpg)
+
+- **Creating a Recipe:** Once all required fields are filled out correctly, the recipe is successfully added to the database. Upon creation, the recipe is available for viewing on the front end.
+  ![Create Recipe](assets/images/create.png)
 - **Editing Recipes:** Recipes were edited both in the admin dashboard and through the front-end interface. The changes made were reflected instantly in the application and updated in the database.
+ <img src="assets/images/edit-before.jpg" alt="Edit Before" style="width: 30%; display: inline-block; margin-right: 10px;" />
+ <img src="assets/images/edit-after.png" alt="Edit After" style="width: 30%; display: inline-block;" />
+
 - **Deleting Recipes:** Recipes were deleted from the system using both the admin dashboard and the front-end interface. The deletion process correctly removed the recipe from the database and updated the recipe list for all users.
+  ![Before Delete](assets/images/before-delete.png)
+  ![After Delete](assets/images/after-delete.png)
 - **Viewing Recipes:** Users were able to view all recipes, which were displayed in the order of their creation date. The recipes were tested to ensure that all fields were displayed correctly on the front-end interface, including titles, images, ingredients, and instructions.
 
 #### User Registration and Authentication Testing
@@ -350,6 +337,7 @@ Testing for user registration, login, and logout functionalities was completed:
    - Navigated to the Sign-Up page and filled in the required fields (username, email, password, confirm password).
    - Submitted the form successfully, and a new user was created.
    - Verified the user was redirected to the appropriate page after registration.
+  ![Sign-Up](assets/images/sign-up.png)
    - Checked for validation messages for empty or incorrectly formatted fields.
 
 2. **User Login**:
@@ -361,35 +349,27 @@ Testing for user registration, login, and logout functionalities was completed:
    - Logged out from the application.
    - Confirmed redirection to the index page after logging out.
    - Verified that the user was no longer authenticated by checking for the login/signup links in the navigation bar.
-
-Overall, all authentication features are functioning as expected.
-
-- **Registering Users:** The registration form collects and validates user information. Once registered, new users can log in with their credentials.
-- **Logging In:** Users can log in with valid credentials and are redirected to the correct page after login.
-- **Logging Out:** Users can successfully log out, and the system redirects them to the homepage.
+  ![Log-Out](assets/images/log-out.png)
 
 ### Search Functionality Testing
 The search functionality was rigorously tested to ensure a seamless user experience. The testing process included:
 
-- **Search for Recipes:** Users can search for recipes by entering keywords into the search bar. The system is designed to accurately return a list of matching recipes based on the search input. During testing, various keywords were inputted, and the results were verified to ensure that all relevant recipes were displayed. This functionality was tested with different combinations of keywords, including partial matches and exact matches, confirming that the search algorithm performs as expected.
-
-### Favourite Recipes Testing
-The favourite recipes feature was tested thoroughly to validate its functionality and user experience:
-
-- **Adding to Favourites:** Users can easily add a recipe to their list of favourites by clicking the 'Add to Favourites' button on the recipe detail page. The system successfully updates the favourites section, displaying the newly added recipe. Testing included verifying that the correct recipe appears in the favourites list after addition, ensuring that the user experience is intuitive and responsive.
-
-- **Removing from Favourites:** Users have the option to remove recipes from their favourites. This action is performed by clicking the 'Remove from Favourites' button. Upon removal, the UI updates immediately to reflect the change, confirming that the recipe is no longer listed in the favourites section. This functionality was tested to ensure that it works seamlessly, maintaining data integrity and providing real-time feedback to users.
+- **Search for Recipes:** Users can search for recipes by entering keywords into the search bar. The system is designed to accurately return a list of matching recipes based on the search input. During testing, various keywords were inputted, and the results were verified to ensure that all relevant recipes were displayed.
+  ![Search Results](assets/images/search.png)
 
 ### Responsive Design Testing
 The website's responsive design was evaluated across multiple devices and screen sizes to guarantee an optimal user experience:
 
-- **Mobile, Tablet, and Desktop Views:** The site layout adjusts correctly for mobile phones, tablets, and desktop computers, ensuring that all content remains accessible and functional regardless of the device used. Testing involved accessing the site on various screen sizes and orientations, verifying that all elements, including images, text, and buttons, scale appropriately. This testing confirmed that the site maintains usability and aesthetic appeal across all devices.
+- **Mobile, Tablet, and Desktop Views:** The site layout adjusts correctly for mobile phones, tablets, and desktop computers, ensuring that all content remains accessible and functional regardless of the device used.
+  ![Mobile View](assets/images/mobile-view.png)
+  ![Tablet View](assets/images/tablet-view.png)
+  ![Desktop View](assets/images/desktop-view.png)
 
 ### Navigation Testing
 The navigation bar was thoroughly tested to ensure smooth user navigation throughout the site:
 
-- **Navigation Bar:** The navigation bar was evaluated for functionality across all pages of the website. Users can access all areas of the site seamlessly through the navigation links. Testing included checking that all links direct users to the correct pages and that dropdown menus function as intended. The navigation bar's responsiveness was also assessed to ensure it remains user-friendly on different devices, providing an efficient way for users to explore the site’s content.
-
+- **Navigation Bar:** The navigation bar was evaluated for functionality across all pages of the website. Users can access all areas of the site seamlessly through the navigation links.
+  <img src="assets/images/nav-bar.png" alt="Navigation Bar" width="300px">
 
 ### Bug Fixes
 
