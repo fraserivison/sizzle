@@ -361,9 +361,19 @@ The search functionality was rigorously tested to ensure a seamless user experie
 The website's responsive design was evaluated across multiple devices and screen sizes to guarantee an optimal user experience:
 
 - **Mobile, Tablet, and Desktop Views:** The site layout adjusts correctly for mobile phones, tablets, and desktop computers, ensuring that all content remains accessible and functional regardless of the device used.
-  ![Mobile View](assets/images/mobile-view.png)
-  ![Tablet View](assets/images/tablet-view.png)
-  ![Desktop View](assets/images/desktop-view.png)
+### Viewport Screenshots
+
+#### Mobile View
+<img src="assets/images/mobile-view.png" alt="Mobile View" width="30%" />
+
+#### Tablet View
+<img src="assets/images/tablet-view.png" alt="Tablet View" width="50%" />
+
+#### Desktop View
+<img src="assets/images/desktop-view.png" alt="Desktop View" width="50%" />
+
+
+
 
 ### Navigation Testing
 The navigation bar was thoroughly tested to ensure smooth user navigation throughout the site:
