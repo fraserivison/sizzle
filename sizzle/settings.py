@@ -29,7 +29,7 @@ cloudinary.config(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-DEBUG = False
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
@@ -114,7 +114,6 @@ DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
@@ -145,10 +144,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
-    BASE_DIR / "assets",
+    os.path.join(BASE_DIR, 'assets'),
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
