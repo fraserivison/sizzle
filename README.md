@@ -320,6 +320,13 @@ The recipe model was thoroughly tested through manual operations using the Djang
 
 - **Creating a Recipe:** Once all required fields are filled out correctly, the recipe is successfully added to the database. Upon creation, the recipe is available for viewing on the front end.
   ![Create Recipe](assets/images/create.png)
+
+- **Creating a Recipe in Django Admin Tool:** 
+  - After submitting the form in Django Admin, a confirmation message is displayed indicating that the recipe was successfully created.
+    ![Django Admin Create](assets/images/django-admin-create.png)
+  - The newly created recipe is then visible on the recipe page, confirming that the addition was successful.
+    ![Django Admin Create 2](assets/images/django-admin-create2.png)
+
 - **Editing Recipes:** Recipes were edited both in the admin dashboard and through the front-end interface. The changes made were reflected instantly in the application and updated in the database.
  <img src="assets/images/edit-before.jpg" alt="Edit Before" style="width: 30%; display: inline-block; margin-right: 10px;" />
  <img src="assets/images/edit-after.png" alt="Edit After" style="width: 30%; display: inline-block;" />
