@@ -259,7 +259,7 @@ The database is a PostgreSQL relational database, fully normalised, with three c
 
 ### Automated Testing
 
-Automated testing is an essential part of the development process in this Recipe Manager project. It ensures that the application behaves as expected and allows us to identify and fix issues quickly. We utilise Django's built-in testing framework to create comprehensive tests for various components of the application, covering both forms and views.The implemented tests cover critical functionalities of the Recipe Manager, contributing to the overall reliability of the application. Regularly running these tests helps to identify regressions and maintain the integrity of the application as new features are added.
+Automated testing is an essential part of the development process in this Recipe Manager project. It ensures that the application behaves as expected and allows us to identify and fix issues quickly. We utilise Django's built-in testing framework to create comprehensive tests for various components of the application, covering both forms and views. The implemented tests cover critical functionalities of the Recipe Manager, contributing to the overall reliability of the application. Regularly running these tests helps to identify regressions and maintain the integrity of the application as new features are added.
 
 #### Test Cases Implemented
 
@@ -389,6 +389,7 @@ The website's responsive design was evaluated across multiple devices and screen
 The navigation bar was thoroughly tested to ensure smooth user navigation throughout the site:
 
 - **Navigation Bar:** The navigation bar was evaluated for functionality across all pages of the website. Users can access all areas of the site seamlessly through the navigation links. Testing included checking that all links direct users to the correct pages and that dropdown menus function as intended. The navigation bar's responsiveness was also assessed to ensure it remains user-friendly on different devices, providing an efficient way for users to explore the site’s content.
+
 
 ### Bug Fixes
 
