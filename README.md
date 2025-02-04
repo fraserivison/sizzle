@@ -183,8 +183,6 @@ These acceptance criteria not only enhance the functionality of **Sizzle** but a
 
 ## Features
 
-## Features
-
 **Sizzle** includes the following key features:
 
 - **Recipe Management**: 
@@ -195,9 +193,9 @@ These acceptance criteria not only enhance the functionality of **Sizzle** but a
   The platform allows users to search for recipes based on keywords, making it easy to find specific dishes or ingredients. This feature enhances user experience by enabling quick access to desired recipes without scrolling through the entire list.
   ![Search Functionality](insert-image-link-here)
 
-- **Favourite Recipes**: 
-  Users can mark their favourite recipes for quick and easy access. This feature is particularly useful for those who often revisit certain dishes and want to streamline their cooking experience.
-  ![Favourite Recipes](insert-image-link-here)
+- **Recipe Rating**: 
+  The rating system allows users to rate recipes based on their experience. This feature helps others gauge the popularity and quality of recipes, promoting community engagement and interaction.
+  ![Recipe Rating](insert-image-link-here)
 
 - **User Authentication**: 
   The application offers secure registration, login, and logout functionalities. User authentication ensures that each individual's recipe collection remains private and secure, while also providing a personalised experience.
@@ -213,10 +211,9 @@ These acceptance criteria not only enhance the functionality of **Sizzle** but a
   The implementation of a dedicated user home page will offer a personalised space for users to view their favourite recipes, recently added dishes, and suggested recipes based on their cooking history. This feature aims to enhance user engagement and streamline access to frequently used functionalities.
   ![User Home Page](insert-image-link-here)
 
-- **Recipe Rating**: 
-  A rating system will be introduced, allowing users to rate recipes based on their experience. This feature will help others gauge the popularity and quality of recipes, promoting community engagement and interaction.
-  ![Recipe Rating](insert-image-link-here)
-
+  - **Favourite Recipes**: 
+  Users will be able to mark their favourite recipes for quick and easy access. This feature will be particularly useful for those who often revisit certain dishes and want to streamline their cooking experience.
+  ![Favourite Recipes](insert-image-link-here)
 
 ---
 
@@ -259,8 +256,6 @@ The database is a PostgreSQL relational database, fully normalised, with three c
 
 
 ## Testing
-
-Test update to trigger a commit.
 
 ### Automated Testing
 
@@ -325,6 +320,10 @@ Automated testing is an essential part of the development process in this Recipe
 - **Mocking Cloudinary Uploads:** 
   - To streamline testing and avoid dependencies on external services, we implemented mocks for Cloudinary's upload functionality. By using a placeholder image URL (`http://example.com/fake-image.jpg`), we could simulate image uploads without requiring actual file uploads during tests. This adjustment ensured that our tests remained fast and reliable.
 
+#### Test Execution Results
+Below is a screenshot of the automated tests executed in the terminal:
+
+![Test Results](assets/images/auto-tests.png)
 
 ### Manual Testing
 
