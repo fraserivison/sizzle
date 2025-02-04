@@ -29,7 +29,7 @@ cloudinary.config(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = False
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
