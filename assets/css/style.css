@@ -1,10 +1,10 @@
 html, body {
-    height: 100%; /* Ensure the body takes the full viewport height */
+    height: 100%;
     margin: 0;
 }
 
 .main-content {
-    flex-grow: 1; /* Ensures the main content takes up available space */
+    flex-grow: 1;
 }
 
 h1, h2, h3, h4, h5, .btn {
@@ -15,7 +15,6 @@ body, p {
     font-family: 'Montserrat', sans-serif;
 }
 
-/* Specific Styling for the navbar brand */
 .navbar-brand {
     font-family: 'Playfair Display', serif;
     font-size: 24px;
