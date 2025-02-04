@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 from django.utils.text import slugify
+from django.utils.html import strip_tags
 
 
 class Recipe(models.Model):
@@ -22,8 +23,16 @@ class Recipe(models.Model):
         ordering = ['-created_on']
 
     def save(self, *args, **kwargs):
+        # Strip HTML tags from fields before saving
+        self.description = strip_tags(self.description)
+        self.ingredients = strip_tags(self.ingredients)
+        self.instructions = strip_tags(self.instructions)
+
+        # Ensure slug is created if not provided
         if not self.slug:
             self.slug = slugify(self.title)
+
+        # Save the instance
         super().save(*args, **kwargs)
 
     def update_average_rating(self):
