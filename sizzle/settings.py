@@ -29,7 +29,7 @@ cloudinary.config(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+DEBUG = False
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
@@ -40,7 +40,9 @@ AUTHENTICATION_BACKENDS = (
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.gitpod.io',
+    "https://*.codeinstitute-ide.net/",
     'https://sizzle-recipe-manager.herokuapp.com',
+    "https://8000-fraserivison-sizzle-0yosmcb7l6q.ws-eu116.gitpod.io",
 ]
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -109,14 +111,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'sizzle.wsgi.application'
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL', f'sqlite:///{BASE_DIR}/db.sqlite3')
+    )
 }
-
-CSRF_TRUSTED_ORIGINS = [
-    "https://*.codeinstitute-ide.net/",
-    "https://sizzle-recipe-manager.herokuapp.com",
-    "https://8000-fraserivison-sizzle-0yosmcb7l6q.ws-eu116.gitpod.io",
-]
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -148,10 +146,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'assets'),
+    BASE_DIR / "assets",
 ]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
